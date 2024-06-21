@@ -59,10 +59,14 @@ struct AuthenticationView: View {
                     .cornerRadius(10)
                     .contentShape(.rect)
                     
-                    NavigationLink(destination: ContentView(CurrencyList: CurrencyList), isActive: $isAdmin) {
+                    .navigationDestination(isPresented: $isAdmin) {
+                        ContentView(CurrencyList: CurrencyList)
                     }
-                    NavigationLink(destination: UserView(CurrencyList: CurrencyList), isActive: $isUser) {
+                    
+                    .navigationDestination(isPresented: $isUser) {
+                        UserView(CurrencyList: CurrencyList)
                     }
+                    
                     
                 }
             }
