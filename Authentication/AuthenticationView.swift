@@ -8,20 +8,7 @@ import LocalAuthentication
 import SwiftUI
 
 struct AuthenticationView: View {
-    
-    @State private var username = ""
-    @State private var password = ""
-    
-    @State private var isAdmin = false
-    @State private var isUser = false
-    
-    @State private var showAlert = false
-    @State private var showAdminAlert = false
-    @State private var showGuestAlert = false
-    
-    @State private var attempts = 2
-    
-    @StateObject private var CurrencyList = Currencies()
+    @State private var viewModel = ViewModel()
     
     var body: some View {
         NavigationStack {
@@ -30,43 +17,61 @@ struct AuthenticationView: View {
                     .ignoresSafeArea(.all)
                 
                 VStack {
+                    Spacer()
+                    
                     Text("Login")
                         .font(.largeTitle)
                         .bold()
                         .padding()
-                    TextField("Username", text: $username)
+                    TextField("Username", text: $viewModel.username)
                         .padding()
                         .frame(width: 300,height: 50)
                         .background(Color.black.opacity(0.05))
                         .cornerRadius(10)
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $viewModel.password)
                         .padding()
                         .frame(width: 300,height: 50)
                         .background(Color.black.opacity(0.05))
                         .cornerRadius(10)
-                    Button("Face ID Unlock", action: biometricsAuthenticate)
-                        .padding()
+                    Button(action: {
+                        viewModel.authenticateUser(username: viewModel.username, password: viewModel.password)
+                    }) {
+                        Text("Login as admin")
+                            .foregroundColor(.white)
+                            .frame(width: 300, height: 50)
+                            .background(Color.blue.opacity(0.4))
+                            .cornerRadius(10)
+                    }
+                    .alert("Wrong credetentials", isPresented: $viewModel.showAlert) {} message: {
+                        Text("Wrong username or password. Try again")
+                    }
+                    
+                    Button("Login", action: viewModel.biometricsAuthenticate)
                         .foregroundStyle(.white)
                         .frame(width: 300,height: 50)
                         .background(Color.blue.opacity(0.4))
                         .cornerRadius(10)
-                    Button("Login") {
-                        isUser = true
-                    }
-                    .foregroundStyle(.white)
-                    .frame(width: 300,height: 50)
-                    .background(Color.blue.opacity(0.4))
-                    .cornerRadius(10)
-                    .contentShape(.rect)
+                        .contentShape(.rect)
+                        .alert("No biometrics", isPresented: $viewModel.showAlert) {} message: {
+                            Text("No biometrics found on your device. Sorry but for security reasons you can't use our app.")
+                        }
                     
-                    .navigationDestination(isPresented: $isAdmin) {
-                        ContentView(CurrencyList: CurrencyList)
-                    }
+                    Spacer()
                     
-                    .navigationDestination(isPresented: $isUser) {
-                        UserView(CurrencyList: CurrencyList)
-                    }
+                    Text("App created by Oleksii Hezha")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Text("Logo created by Happy girl from Noun project")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
                     
+                        .navigationDestination(isPresented: $viewModel.isAdmin) {
+                            ContentView(CurrencyList: viewModel.CurrencyList)
+                        }
+                    
+                        .navigationDestination(isPresented: $viewModel.isUser) {
+                            UserView(CurrencyList: viewModel.CurrencyList)
+                        }
                     
                 }
             }
@@ -74,37 +79,7 @@ struct AuthenticationView: View {
         .navigationBarHidden(true)
     }
     
-    func authenticateUser(username: String, password: String) {
-        if password.lowercased() == "admin" && username.lowercased() == "admin" {
-            showAdminAlert.toggle()
-            isAdmin = true
-        } else {
-            if attempts <= 0 {
-                showGuestAlert.toggle()
-                isUser = true
-            } else {
-                showAlert.toggle()
-                attempts -= 1
-            }
-        }
-    }
     
-    func biometricsAuthenticate() {
-        let context = LAContext()
-        var error: NSError?
-        
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-            let reason = "Please authenticate yourself to unlock your places"
-            
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
-                if success {
-                    self.isAdmin = true
-                } else {
-                    // no biometrics
-                }
-            }
-        }
-    }
 }
 
 #Preview {
