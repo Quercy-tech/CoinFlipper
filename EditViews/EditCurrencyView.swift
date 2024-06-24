@@ -10,9 +10,8 @@ import SwiftUI
 struct EditCurrencyView: View {
     
     @Environment(\.dismiss) var dismiss
-    @Binding var currency: Currency
     @ObservedObject var CurrencyList: Currencies
-    
+    @Binding var currency: Currency
     @Binding var base: String
     @Binding var codesAndNames: [String: String]
     @State var selectedCurrency: String

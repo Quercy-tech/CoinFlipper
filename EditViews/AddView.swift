@@ -38,7 +38,7 @@ struct AddView: View {
                         let selectionFeedback = UIImpactFeedbackGenerator(style: .heavy)
                         selectionFeedback.impactOccurred()
                     }
-                    .onChange(of: filteredCodesAndNames) { _ in
+                    .onChange(of: filteredCodesAndNames) {
                         // Update selectedCurrency when the filtered list changes
                         if let firstCurrency = filteredCodesAndNames.first?.key {
                             selectedCurrency = firstCurrency
