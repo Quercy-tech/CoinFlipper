@@ -20,13 +20,8 @@ You can easily change the amount of money you want to convert or switch the base
 - API
 - MVVM
 
-## App Screenshots ##
-<div align="center">
-<video controls width="300">
-  <source src="Assets.xcassets/video.dataset/video.mov" type="video/quicktime">
-  Your browser does not support the video tag.
-</video>
-</div>
+## App highlights ##
+https://github.com/Quercy-tech/CoinFlipper/assets/68280745/abcb2607-77d4-4fa0-aa2b-d4bdd9183606
 
 ### Login screen ###
 <div align="center">
