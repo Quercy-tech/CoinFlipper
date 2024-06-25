@@ -23,7 +23,7 @@ You can easily change the amount of money you want to convert or switch the base
 ## App Screenshots
 <div align="center">
 <video controls width="300">
-  <source src="videos/demo.mov" type="video/quicktime">
+  <source src="video.dataset/video.mov" type="video/quicktime">
   Your browser does not support the video tag.
 </video>
 </div>
