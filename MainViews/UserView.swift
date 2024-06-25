@@ -60,6 +60,9 @@ struct UserView: View {
                 viewModel.makeRequest(currencies: CurrencyList.codes, CurrencyList: CurrencyList)
                
             }
+            .onChange(of: viewModel.base, {
+                viewModel.makeRequest(currencies: CurrencyList.codes, CurrencyList: CurrencyList)
+            })
             
             .navigationTitle("CoinFlipper")
             .toolbar {
