@@ -23,7 +23,8 @@ struct ContentView: View {
                                 VStack(alignment: .leading) {
                                     Text("Rates:")
                                     ForEach(rateKeys, id: \.self) { key in
-                                        let currencyAmount = (currency.rates[key] ?? 0.0) * (Double(viewModel.amount) ?? 0.0)
+                                        let formattedAmount = viewModel.amount.replacingOccurrences(of: ",", with: ".")
+                                        let currencyAmount = (currency.rates[key])! * (Double(formattedAmount)!)
                                         Text("\(key): \(currencyAmount.formatted())")
                                     }
                                 }
@@ -49,6 +50,7 @@ struct ContentView: View {
                     .padding()
                     .keyboardType(.decimalPad)
                     .focused($isFocused)
+                    
                 
                 TextField("Enter a currency", text: $viewModel.base)
                     .padding()
