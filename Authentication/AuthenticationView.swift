@@ -52,8 +52,8 @@ struct AuthenticationView: View {
                         .background(Color.blue.opacity(0.4))
                         .cornerRadius(10)
                         .contentShape(.rect)
-                        .alert("No biometrics", isPresented: $viewModel.showAlert) {} message: {
-                            Text("No biometrics found on your device. Sorry but for security reasons you can't use our app.")
+                        .alert("No biometrics", isPresented: $viewModel.showAlertNoBiometrics) {} message: {
+                            Text("No biometrics found on your device. For security reasons you can't use our app.")
                         }
                     
                     Spacer()

@@ -9,6 +9,7 @@ import SwiftUI
 struct UserView: View { 
     @State private var viewModel = ViewModel()
     @ObservedObject var CurrencyList: Currencies
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         NavigationStack {
@@ -42,13 +43,16 @@ struct UserView: View {
                     .cornerRadius(20.0)
                     .padding()
                     .keyboardType(.decimalPad)
+                    .focused($isFocused)
                 TextField("Enter a currency", text: $viewModel.base)
                     .padding()
                     .background(Color.gray.opacity(0.10))
                     .cornerRadius(20.0)
                     .padding()
+                    .focused($isFocused)
                
                 Button("Convert") {
+                    isFocused = false
                     viewModel.makeRequest(currencies: CurrencyList.codes, CurrencyList: CurrencyList)
                 }.padding()
             }
