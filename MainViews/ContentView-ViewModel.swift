@@ -11,10 +11,9 @@ extension ContentView {
     
     @Observable
     class ViewModel {
-         var base = "UAH"
-         var amount = "1.0"
-         var showingAddCurrency = false
-        //var inputIsFocused = false
+        var base = "UAH"
+        var amount = "1.0"
+        var showingAddCurrency = false
         
         var showingDates = false
         var showingEditCurrency = false
@@ -22,7 +21,7 @@ extension ContentView {
         var codesAndValues = [String: Double]()
         var codesAndNames = [String: String]()
         
-         var shouldMakeRequest = true
+        var shouldMakeRequest = true
         
         func currencyName(currencyCode: String) -> String {
             

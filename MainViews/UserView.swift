@@ -21,7 +21,8 @@ struct UserView: View {
                   Text("Rates:")
                     
                   ForEach(rateKeys, id: \.self) { key in
-                      let currencyAmount = (currency.rates[key] ?? 0.0) * (Double(viewModel.amount) ?? 0.0)
+                      let formattedAmount = viewModel.amount.replacingOccurrences(of: ",", with: ".")
+                      let currencyAmount = (currency.rates[key] ?? 0.0) * (Double(formattedAmount) ?? 0.0)
                       Text("\(key): \(currencyAmount.formatted())")
                   }
                 }
